@@ -1,0 +1,42 @@
+name: Deploy to S3
+
+on: 
+  push:
+    branches: 'master'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Install Node
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: npm
+
+      # Install dependencies
+    - name: Install dependencies
+      run: npm install
+
+      # Build static Svelte-kit site.
+    - name: build
+      env:
+        BASE_PATH: '/${{ github.event.repository.name }}'
+      run: |
+        npm run build
+
+    # Setup AWS
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    # Deploy
+    - name: Deploy static site to S3 bucket
+      run: aws s3 sync ./build/ s3://russo-personal-website --delete
