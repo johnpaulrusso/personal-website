@@ -1,5 +1,26 @@
 <script>
 	import WorkHistory from '$lib/WorkHistory.svelte';
+	import { onMount } from 'svelte';
+
+    let visitorCount = $state(0);
+    let visitorsReady = $state(false);
+
+    onMount(() => {
+        fetch('https://fek2i6k5rc.execute-api.us-east-1.amazonaws.com/Prod/visitors/').then((response) => {
+            if(response.status == 200){
+                response.json().then((value) => {
+                    visitorCount = value['visitor_count'];
+                    visitorsReady = true;
+                }).catch((reason) => {
+                    console.log(`Failed to parse visitor count: ${reason}`)
+                })
+            }else{
+                console.log(`Failed to fetch visitor count: ${response.status}`)
+            }
+        }).catch((reason) => {
+            console.log(`Failed to fetch visitor count: ${reason}`)
+        })
+    })
 </script>
 
 {#snippet sectionHeader(/** @type {string} */ header)}
@@ -29,27 +50,33 @@
 						<div>john.p.russo@colorado.edu</div>
 					</div>
 				</div>
-                <div class="h-full flex flex-col space-y-1 sm:flex-row sm:space-x-4 sm:items-center">
-                    <a
-                    href="https://github.com/johnpaulrusso"
-                    aria-label="Link to Github Repository"
-                    class="inline-flex items-center text-slate-50 hover:text-slate-300"
-                    role="menuitem"
-                    title="Github"
-                >
-                    <i class="fa-brands fa-github text-3xl"></i></a
-                >
-                    <a
-                    href="https://github.com/johnpaulrusso/sverminal"
-                    aria-label="Link to LinkedIn Profile"
-                    class="inline-flex items-center text-slate-50 hover:text-slate-300"
-                    role="menuitem"
-                        title="LinkedIn"
+                <div class="text-xs flex flex-col justify-between items-end">
+                    <div class="space-x-2 sm:flex-row sm:space-x-4 sm:items-center">
+                        <a
+                        href="https://github.com/johnpaulrusso"
+                        aria-label="Link to Github Repository"
+                        class="inline-flex items-center text-slate-50 hover:text-slate-300"
+                        role="menuitem"
+                        title="Github"
                     >
-                        <i class="fa-brands fa-linkedin text-3xl"></i></a
+                        <i class="fa-brands fa-github text-3xl"></i></a
                     >
-
+                        <a
+                        href="https://www.linkedin.com/in/john-russo-21220069/"
+                        aria-label="Link to LinkedIn Profile"
+                        class="inline-flex items-center text-slate-50 hover:text-slate-300"
+                        role="menuitem"
+                            title="LinkedIn"
+                        >
+                            <i class="fa-brands fa-linkedin text-3xl"></i></a
+                        >
+    
+                    </div>
+                    {#if visitorsReady}
+                        <div>Visitors: {visitorCount}</div>
+                    {/if}
                 </div>
+
 
 			</div>
 		</section>
