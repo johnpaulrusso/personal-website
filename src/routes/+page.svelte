@@ -35,23 +35,26 @@
 	<div class="w-full max-w-[816px] bg-slate-50">
 		<section class="bg-gradient-to-br from-slate-700 to-slate-500 p-2 text-slate-50 sm:p-4">
 			<div class="flex justify-between">
-				<div class="flex flex-col">
+				<div class="flex flex-col justify-between">
 					<div class="flex items-baseline space-x-2">
-						<span class="font-heading text-xl font-semibold">John Paul Russo</span>
+						<span class="text-lg font-heading sm:text-xl font-semibold">John Paul Russo</span>
 						<span class="">|</span>
-						<span class=""><em>Software Engineer</em></span>
+						<span class="text-sm sm:text-base"><em>Software Engineer</em></span>
 					</div>
-					<div class="text-xs">
-						<div>Baltimore, MD 21224</div>
-					</div>
+                    <div>
+                        <div class="text-xs">
+                            <div>Baltimore, MD 21224</div>
+                        </div>
+    
+                        <div class="text-xs">
+                            <div>+1 (443) 834 8527</div>
+                            <div>john.p.russo@colorado.edu</div>
+                        </div>
+                    </div>
 
-					<div class="text-xs">
-						<div>+1 (443) 834 8527</div>
-						<div>john.p.russo@colorado.edu</div>
-					</div>
 				</div>
                 <div class="text-xs flex flex-col justify-between items-end">
-                    <div class="space-x-2 sm:flex-row sm:space-x-4 sm:items-center">
+                    <div class="flex flex-col items-end space-x-2 sm:flex-row sm:space-x-4 sm:items-center">
                         <a
                         href="https://github.com/johnpaulrusso"
                         aria-label="Link to Github Repository"
